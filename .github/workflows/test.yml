@@ -1,0 +1,38 @@
+name: 'Acfun sign in'
+ 
+on:
+  watch:
+    types: started
+  schedule:
+  # 定时任务，在每天的5点推送登录信息到钉钉
+    - cron: '0 16 * * *'
+    - cron: '0 17 * * *'
+jobs:
+  bot:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Set up Python 3.7
+      uses: actions/setup-python@master
+      with:
+        python-version: 3.7
+    - name: Set up Python
+      uses: actions/setup-python@v2
+
+      with:
+
+       python-version: '3.x'
+
+      # 安装依赖
+
+    - name: Install dependencies
+
+      run: |
+       python -m pip install --upgrade pip
+       pip install requests
+    - name: Update paper list
+      run: |
+        python acfun.py ${{ secrets.USERNAME }} ${{ secrets.PASSWORD }} ${{ secrets.DINGDING }} ${{ secrets.TEXT }} 
